@@ -6,7 +6,7 @@ terraform {
     kubernetes = { source = "hashicorp/kubernetes", version = "~> 2.35" }
   }
   backend "s3" {
-    bucket       = "tfstate-didacloudops-gitops"
+    bucket       = "tfstate-armelcloudops-gitops"
     key          = "dev/platform/terraform.tfstate"
     region       = "us-east-1"
     encrypt      = true
@@ -116,12 +116,12 @@ variable "composants" {
 
 data "terraform_remote_state" "socle" {
   backend = "s3"
-  config  = { bucket = "tfstate-didacloudops-gitops", key = "socle/terraform.tfstate", region = "us-east-1" }
+  config  = { bucket = "tfstate-armelcloudops-gitops", key = "socle/terraform.tfstate", region = "us-east-1" }
 }
 
 data "terraform_remote_state" "aws" {
   backend = "s3"
-  config  = { bucket = "tfstate-didacloudops-gitops", key = "dev/aws/terraform.tfstate", region = "us-east-1" }
+  config  = { bucket = "tfstate-armelcloudops-gitops", key = "dev/aws/terraform.tfstate", region = "us-east-1" }
 }
 
 data "aws_caller_identity" "courant" {}
