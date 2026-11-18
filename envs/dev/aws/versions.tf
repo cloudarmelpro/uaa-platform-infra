@@ -4,7 +4,7 @@ terraform {
     aws = { source = "hashicorp/aws", version = "~> 5.0" }
   }
   backend "s3" {
-    bucket       = "tfstate-didacloudops-gitops"
+    bucket       = "tfstate-armelcloudops-gitops"
     key          = "dev/aws/terraform.tfstate"
     region       = "us-east-1"
     encrypt      = true

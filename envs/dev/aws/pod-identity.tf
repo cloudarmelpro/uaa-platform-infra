@@ -5,7 +5,7 @@ module "external_secrets_pod_identity" {
 
   name                                  = "external-secrets"
   attach_external_secrets_policy        = true
-  external_secrets_secrets_manager_arns = ["arn:aws:secretsmanager:us-east-1:181975986285:secret:uaa/*"]
+  external_secrets_secrets_manager_arns = ["arn:aws:secretsmanager:us-east-1:651694719621:secret:uaa/*"]
 
   associations = {
     this = {

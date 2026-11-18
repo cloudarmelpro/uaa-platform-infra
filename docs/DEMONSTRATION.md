@@ -180,7 +180,7 @@ spec:
     runAsUser: 10001
   containers:
     - name: api
-      image: 181975986285.dkr.ecr.us-east-1.amazonaws.com/uaa/portal-api:sha-0c141ac
+      image: 651694719621.dkr.ecr.us-east-1.amazonaws.com/uaa/portal-api:sha-0c141ac
       securityContext:
         readOnlyRootFilesystem: true
         allowPrivilegeEscalation: false
