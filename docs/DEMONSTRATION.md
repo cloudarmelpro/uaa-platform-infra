@@ -101,16 +101,19 @@ Onglet 1 : recharger la page, le message actuel s'affiche.
 2. Sur la ligne `"message":`, remplacer le texte entre guillemets par :
    `Bonjour au jury de l'ENI - soutenance du 19 novembre 2026`
    (garder les guillemets et la virgule).
-3. **Commit changes…** :
-   - si GitHub propose *Commit directly to the main branch* → choisir cette option, puis **Commit changes** ;
-   - s'il impose une branche → **Propose changes** → **Create pull request** → attendre les contrôles
-     verts → **Merge pull request** → **Confirm merge**.
+3. **Commit changes…** → **Propose changes** → **Create pull request**
+   (la branche `main` est protégée : toute modification passe par une demande de fusion).
+4. Attendre que les contrôles de la pull request passent au vert (**analyses-code** et **image**,
+   environ 1 minute), puis **Merge pull request** → **Confirm merge**.
+   **C'est la seule validation à faire** : aucune approbation n'est demandée pour l'environnement dev.
 
-> « Je n'ai touché à aucun serveur : j'ai seulement modifié le code dans Git. »
+> « Je n'ai touché à aucun serveur : j'ai seulement proposé une modification du code. Elle est testée
+> avant d'être acceptée, et c'est la fusion qui déclenche le déploiement. »
 
 ### B3. Le pipeline CI/CD (1 min 30)
 
-Onglet 3 : ouvrir l'exécution en haut de la liste. Les 3 jobs s'enchaînent en environ 75 secondes :
+Onglet 3 : ouvrir l'exécution lancée par la fusion (en haut de la liste, branche `main`).
+Les 3 jobs s'enchaînent en environ 75 secondes, sans aucune action à faire :
 
 1. **analyses-code** : tests et contrôles du code ;
 2. **image** : construction de l'image Docker, envoi dans Amazon ECR avec l'étiquette `sha-` + début du commit ;
@@ -185,8 +188,13 @@ Les réplicas repassent de 5 à 1 en environ 2 secondes (Ctrl+C pour arrêter).
 3. Une fois vert : **Refresh** dans ArgoCD (portal-api-staging), puis ouvrir
    https://staging.elyse-cloud.duckdns.org/api/
 
-> « On ne reconstruit pas l'image : on promeut la version déjà validée. La production fonctionne de la
-> même façon, avec une approbation obligatoire. »
+> « On ne reconstruit pas l'image : on promeut la version déjà validée. »
+
+Staging ne demande aucune approbation. Pour la **production** (seulement si le jury le demande) :
+même workflow avec `prod` ; l'exécution s'arrête sur **Review deployments** → cocher **prod** →
+**Approve and deploy**. C'est la seule approbation de toute la plateforme.
+
+> « La production exige l'approbation d'une personne autorisée : GitHub garde son nom et la date. »
 
 **C3. Les cibles surveillées par Prometheus**
 
