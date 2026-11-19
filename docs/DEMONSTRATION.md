@@ -117,7 +117,7 @@ Les 3 jobs s'enchaînent en environ 75 secondes, sans aucune action à faire :
 
 1. **analyses-code** : tests et contrôles du code ;
 2. **image** : construction de l'image Docker, envoi dans Amazon ECR avec l'étiquette `sha-` + début du commit ;
-3. **maj-gitops** : écriture de la nouvelle version dans le dépôt de configuration.
+3. **maj-gitops** : écriture de la nouvelle version dans le dépôt de configuration, **pour dev, staging et prod à la fois**.
 
 > « La chaîne d'intégration ne touche jamais au cluster : elle écrit seulement la nouvelle version dans Git. »
 
@@ -132,9 +132,12 @@ Les 3 jobs s'enchaînent en environ 75 secondes, sans aucune action à faire :
 
 ### B5. Voir le changement (30 s)
 
-Onglet 1 : **Ctrl+F5**, le nouveau message s'affiche.
+Onglet 1 : **Ctrl+F5**, le nouveau message s'affiche. Il apparaît aussi sur
+https://staging.elyse-cloud.duckdns.org/api/ et https://prod.elyse-cloud.duckdns.org/api/
+(Refresh dans ArgoCD sur portal-api-staging et portal-api-prod pour ne pas attendre 3 minutes).
 
-> « En moins de trois minutes, la modification est en ligne, sans aucune intervention manuelle. »
+> « En moins de trois minutes, la modification est en ligne dans les trois environnements, sans aucune
+> intervention manuelle. »
 
 ### B6. Prometheus : la nouvelle version est mesurée (45 s)
 
@@ -181,7 +184,7 @@ Les réplicas repassent de 5 à 1 en environ 2 secondes (Ctrl+C pour arrêter).
 
 > « C'est Git qui fait foi : ArgoCD annule toute modification faite à la main. »
 
-**C2. Promotion vers staging (1 min)**
+**C2. Promotion manuelle (facultatif, le déploiement est déjà automatique dans les trois environnements)**
 
 1. https://github.com/cloudarmelpro/uaa-platform-gitops/actions → workflow **promotion** → **Run workflow**.
 2. Choisir `portal-api` et `staging` → **Run workflow**.
